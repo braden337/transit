@@ -2,11 +2,12 @@
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   height: 100%;
 }
 
-body {  
+body {
   display: grid;
   grid-template-columns: 1fr 3fr;
   font-family: Arial, Helvetica, sans-serif;
@@ -26,7 +27,7 @@ aside {
 }
 
 main {
-  background-color: #f6f7fb;  
+  background-color: #f6f7fb;
 }
 
 .titlebar {
@@ -43,15 +44,15 @@ input {
   border-radius: 5px;
   border: 0;
   width: 100%;
-  position: relative;    
+  position: relative;
 }
 
 input:before {
-  content: "\25AE";  /* this is your text. You can also use UTF-8 character codes as I do here */
+  content: '\25AE'; /* this is your text. You can also use UTF-8 character codes as I do here */
   font-family: FontAwesome;
-  left:-5px;
-  position:absolute;
-  top:0;
+  left: -5px;
+  position: absolute;
+  top: 0;
 }
 
 table {
@@ -76,11 +77,11 @@ tbody td {
   border-bottom: 1.5px solid #d3d3d3;
 }
 
-tbody tr:last-child td  {
+tbody tr:last-child td {
   border-bottom: none;
 }
 
-tbody tr:first-child td  {
+tbody tr:first-child td {
   border-top: 1.5px solid #085708;
 }
 
@@ -91,4 +92,3 @@ tbody tr:first-child td  {
   padding-left: 0;
   font-weight: 700;
 }
-
