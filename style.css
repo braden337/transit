@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+}
+
+body {  
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+aside {
+  background-color: #323543;
+  color: #40ba9b;
+  padding: 0 10px;
+}
+
+.streets a {
+  background-color: transparent;
+  display: block;
+  color: #40ba9b;
+  margin: 20px 0;
+}
+
+main {
+  background-color: #f6f7fb;  
+}
+
+.titlebar {
+  padding: 18px 10px;
+  color: #f6f7fb;
+}
+
+.titlebar i {
+  margin-right: 10px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 0;
+  width: 100%;
+  position: relative;    
+}
+
+input:before {
+  content: "\25AE";  /* this is your text. You can also use UTF-8 character codes as I do here */
+  font-family: FontAwesome;
+  left:-5px;
+  position:absolute;
+  top:0;
+}
+
+table {
+  background-color: white;
+  width: 90%;
+  margin: auto;
+  border-spacing: 0;
+  border: 1px solid black;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+td {
+  padding: 20px 10px;
+}
+
+thead td {
+  font-weight: 700;
+}
+
+tbody td {
+  border-bottom: 1.5px solid #d3d3d3;
+}
+
+tbody tr:last-child td  {
+  border-bottom: none;
+}
+
+tbody tr:first-child td  {
+  border-top: 1.5px solid #085708;
+}
+
+#street-name {
+  color: black;
+  width: 90%;
+  margin: auto;
+  padding-left: 0;
+  font-weight: 700;
+}
+
