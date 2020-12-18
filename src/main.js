@@ -10,8 +10,6 @@ const winnipegTransitURL = new URL('https://api.winnipegtransit.com');
 const searchParams = new URLSearchParams();
 searchParams.append('api-key', process.env.APIKEY);
 
-const noStreetsFound = `<div class="no-results">No Streets Found</div>`;
-
 const streetSection = document.querySelector('.streets');
 const stopSchedulesTableTitle = document.querySelector('#street-name');
 const StopSchedulesTable = document.querySelector('table tbody');
@@ -58,7 +56,9 @@ const streetToHTML = street =>
 
 function showStreets(streets) {
   streetSection.innerHTML =
-    streets.length > 0 ? streets.map(streetToHTML).join('') : noStreetsFound;
+    streets.length > 0
+      ? streets.map(streetToHTML).join('')
+      : `<div class="no-results">No Streets Found</div>`;
 }
 
 function handleStreetClick(clickEvent) {
