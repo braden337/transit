@@ -125,7 +125,7 @@ const stopToHTML = stop => `<tr class="${stop.direction}">
   <td>${stop.nextBus.format('hh:mm A')}</td>
 </tr>`;
 
-function legendHTML(direction) {
+const legendHTML = direction => {
   const opposite = {Northbound: 'Southbound', Eastbound: 'Westbound'};
   return `<dl id="legend">
     <dt class="${direction}"></dt>
@@ -133,7 +133,7 @@ function legendHTML(direction) {
     <dt class="${opposite[direction]}"></dt>
     <dd>${opposite[direction]}</dd>
   </dl>`;
-}
+};
 
 function showStopSchedules(stops) {
   const thereAreStops = stops.length > 0;
