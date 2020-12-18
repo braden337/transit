@@ -117,7 +117,7 @@ function getStopSchedules(stops) {
     .then(showStopSchedules);
 }
 
-const stopToHTML = stop => `<tr>
+const stopToHTML = stop => `<tr class="${stop.direction}">
   <td>${stop.name}</td>
   <td>${stop.crossStreet}</td>
   <td>${stop.direction}</td>
