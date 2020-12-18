@@ -6,7 +6,7 @@ require('dotenv').config();
 import dayjs from 'dayjs';
 import {flattenDeep} from 'lodash';
 
-const winnipegTransitURL = new URL('https://api.winnipegtransit.com/v3');
+const winnipegTransitURL = new URL('https://api.winnipegtransit.com');
 const searchParams = new URLSearchParams();
 searchParams.append('api-key', process.env.APIKEY);
 
@@ -18,6 +18,20 @@ const StopSchedulesTable = document.querySelector('table tbody');
 
 search.onsubmit = handleStreetSearch;
 streetSection.onclick = handleStreetClick;
+
+function endpointURL(pathname, options) {
+  winnipegTransitURL.pathname = `v3/${pathname}`;
+
+  options = Object.entries(options);
+
+  for (let [option, value] of options) searchParams.append(option, value);
+
+  winnipegTransitURL.search = searchParams.toString();
+
+  for (let [option] of options) searchParams.delete(option);
+
+  return winnipegTransitURL.href;
+}
 
 function handleStreetSearch(submitEvent) {
   submitEvent.preventDefault();
@@ -33,18 +47,7 @@ function handleStreetSearch(submitEvent) {
 function getStreets(name) {
   streetSection.innerHTML = '';
 
-  searchParams.append('name', name);
-  searchParams.append('usage', 'long');
-
-  winnipegTransitURL.search = searchParams;
-  winnipegTransitURL.pathname = '/v3/streets.json';
-
-  const url = winnipegTransitURL.href;
-
-  searchParams.delete('name');
-  searchParams.delete('usage');
-
-  fetch(url)
+  fetch(endpointURL('streets.json', {name, usage: 'long'}))
     .then(response => response.json())
     .then(result => result.streets)
     .then(showStreets);
@@ -64,34 +67,20 @@ function handleStreetClick(clickEvent) {
   if (street.nodeName === 'A') getStops(street.dataset.key);
 }
 
-function getStops(streetKey) {
-  searchParams.append('street', streetKey);
-
-  winnipegTransitURL.search = searchParams;
-  winnipegTransitURL.pathname = '/v3/stops.json';
-
-  const url = winnipegTransitURL.href;
-
-  searchParams.delete('street');
-
-  fetch(url)
+function getStops(street) {
+  fetch(endpointURL('stops.json', {street}))
     .then(response => response.json())
     .then(result => result.stops)
     .then(getStopSchedules);
 }
 
 function getStopSchedules(stops) {
-  searchParams.append('max-results-per-route', 2);
-  winnipegTransitURL.search = searchParams;
-
   stops = stops
     .map(stop => stop.key)
-    .map(key => {
-      winnipegTransitURL.pathname = `/v3/stops/${key}/schedule.json`;
-
-      const url = winnipegTransitURL.href;
-
-      return fetch(url)
+    .map(key =>
+      fetch(
+        endpointURL(`stops/${key}/schedule.json`, {'max-results-per-route': 2})
+      )
         .then(response => response.json())
         .then(result => result['stop-schedule'])
         .then(schedule =>
@@ -111,10 +100,8 @@ function getStopSchedules(stops) {
               }))
               .filter(stop => stop.nextBus !== null)
           )
-        );
-    });
-
-  searchParams.delete('max-results-per-route');
+        )
+    );
 
   Promise.all(stops)
     .then(stops => flattenDeep(stops))
