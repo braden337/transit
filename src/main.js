@@ -17,6 +17,27 @@ const StopSchedulesTable = document.querySelector('table tbody');
 search.onsubmit = handleStreetSearch;
 streetSection.onclick = handleStreetClick;
 
+const streetToHTML = street =>
+  `<a href data-key="${street.key}">${street.name}</a>`;
+
+const stopToHTML = stop => `<tr class="${stop.direction}">
+  <td>${stop.name}</td>
+  <td>${stop.crossStreet}</td>
+  <td>${stop.direction}</td>
+  <td>${stop.busNumber}</td>
+  <td>${stop.nextBus.format('hh:mm A')}</td>
+</tr>`;
+
+const legendHTML = direction => {
+  const opposite = {Northbound: 'Southbound', Eastbound: 'Westbound'};
+  return `<dl id="legend">
+    <dt class="${direction}"></dt>
+    <dd>${direction}</dd>
+    <dt class="${opposite[direction]}"></dt>
+    <dd>${opposite[direction]}</dd>
+  </dl>`;
+};
+
 function endpointURL(pathname, options) {
   winnipegTransitURL.pathname = `v3/${pathname}`;
 
@@ -50,9 +71,6 @@ function getStreets(name) {
     .then(result => result.streets)
     .then(showStreets);
 }
-
-const streetToHTML = street =>
-  `<a href data-key="${street.key}">${street.name}</a>`;
 
 function showStreets(streets) {
   streetSection.innerHTML =
@@ -116,24 +134,6 @@ function getStopSchedules(stops) {
     )
     .then(showStopSchedules);
 }
-
-const stopToHTML = stop => `<tr class="${stop.direction}">
-  <td>${stop.name}</td>
-  <td>${stop.crossStreet}</td>
-  <td>${stop.direction}</td>
-  <td>${stop.busNumber}</td>
-  <td>${stop.nextBus.format('hh:mm A')}</td>
-</tr>`;
-
-const legendHTML = direction => {
-  const opposite = {Northbound: 'Southbound', Eastbound: 'Westbound'};
-  return `<dl id="legend">
-    <dt class="${direction}"></dt>
-    <dd>${direction}</dd>
-    <dt class="${opposite[direction]}"></dt>
-    <dd>${opposite[direction]}</dd>
-  </dl>`;
-};
 
 function showStopSchedules(stops) {
   const thereAreStops = stops.length > 0;
