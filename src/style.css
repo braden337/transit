@@ -84,6 +84,8 @@ th {
 thead th {
   font-weight: 700;
   background-color: var(--header);
+  position: sticky;
+  top: 0;
 }
 
 tbody td {
