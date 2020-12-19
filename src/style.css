@@ -74,7 +74,6 @@ input:before {
 }
 
 table {
-  background-color: var(--header);
   width: 100%;
   border-spacing: 0;
   margin-bottom: 20px;
@@ -96,11 +95,19 @@ td:first-child {
   text-align: left;
 }
 
-thead tr {
+thead th {
   font-weight: 700;
   background-color: var(--header);
+}
+
+thead tr {
+  margin-top: 1rem;
+}
+
+thead,
+thead tr {
   position: sticky;
-  top: 0;
+  top: 6.85rem;
 }
 
 tbody td {
@@ -113,8 +120,11 @@ tbody tr:last-child td {
 }
 
 #street-name {
+  background-color: var(--background);
   padding-left: 0;
   font-weight: 700;
+  position: sticky;
+  top: 0;
 }
 
 .Northbound,
