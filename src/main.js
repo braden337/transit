@@ -4,7 +4,7 @@ import './style.css';
 require('dotenv').config();
 
 import dayjs from 'dayjs';
-import {flattenDeep} from 'lodash';
+import {flattenDeep, uniq} from 'lodash';
 
 const winnipegTransitURL = new URL('https://api.winnipegtransit.com');
 const searchParams = new URLSearchParams();
@@ -13,10 +13,15 @@ searchParams.append('api-key', process.env.APIKEY);
 const streetSection = document.querySelector('.streets');
 const stopSchedulesTitle = document.querySelector('#street-name');
 const stopSchedulesLegend = document.querySelector('#legend');
-const StopSchedules = document.querySelector('#schedules main');
+const crossStreetSelect = document.querySelector('#crossStreet');
+const stopSchedules = document.querySelector('#schedules main');
+
+let theStops = [];
 
 search.onsubmit = handleStreetSearch;
 streetSection.onclick = handleStreetClick;
+crossStreetSelect.onchange = changeEvent =>
+  showStopSchedules(changeEvent.target.value);
 
 const streetToHTML = street =>
   `<a href data-key="${street.key}">${street.name}</a>`;
@@ -40,7 +45,13 @@ const stopToHTML = stop => `<div class="row ${stop.direction}">
 </div>`;
 
 const legendHTML = direction => {
-  const opposite = {Northbound: 'Southbound', Eastbound: 'Westbound'};
+  const opposite = {
+    Northbound: 'Southbound',
+    Eastbound: 'Westbound',
+    Southbound: 'Northbound',
+    Westbound: 'Eastbound',
+  };
+  
   return `<dt class="${direction}">${directionSymbol(direction)}</dt>
     <dd>${direction}</dd>
     <dt class="${opposite[direction]}">${directionSymbol(
@@ -93,7 +104,10 @@ function showStreets(streets) {
 function handleStreetClick(clickEvent) {
   clickEvent.preventDefault();
   const street = clickEvent.target;
-  if (street.nodeName === 'A') getStops(street.dataset.key);
+  if (street.nodeName === 'A') {
+    theStops = [];
+    getStops(street.dataset.key);
+  }
 }
 
 function getStops(street) {
@@ -143,19 +157,44 @@ function getStopSchedules(stops) {
           a.nextBus - b.nextBus
       )
     )
-    .then(showStopSchedules);
+    .then(stops => {
+      theStops = stops;
+      showStopSchedules();
+    });
 }
 
-function showStopSchedules(stops) {
-  const thereAreStops = stops.length > 0;
+function showStopSchedules(crossStreetFilter = '') {
+  let thereAreStops = theStops.length > 0;
+
+  const stops =
+    thereAreStops && crossStreetFilter !== ''
+      ? theStops.filter(stop => stop.crossStreet === crossStreetFilter)
+      : theStops;
+
+  thereAreStops = stops.length > 0;
 
   stopSchedulesTitle.innerText = thereAreStops
     ? `Displaying results for ${stops[0].name}`
     : '';
 
+  const crossStreets = uniq(theStops.map(stop => stop.crossStreet));
+
+  crossStreetSelect.innerHTML =
+    thereAreStops && crossStreets.length > 1
+      ? `<select>
+        <option value="">All Cross Streets</option>
+        ${crossStreets.map(
+          crossStreet =>
+            `<option ${
+              crossStreet === crossStreetFilter ? 'selected' : ''
+            } value="${crossStreet}">${crossStreet}</option>`
+        )}
+      </select>`
+      : 'Cross Street';
+
   stopSchedulesLegend.innerHTML = thereAreStops
     ? legendHTML(stops[0].direction)
     : '';
 
-  StopSchedules.innerHTML = thereAreStops ? stops.map(stopToHTML).join('') : '';
+  stopSchedules.innerHTML = thereAreStops ? stops.map(stopToHTML).join('') : '';
 }
