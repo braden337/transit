@@ -107,7 +107,7 @@ thead tr {
 thead,
 thead tr {
   position: sticky;
-  top: 6.85rem;
+  top: 8.85rem;
 }
 
 tbody td {
@@ -147,8 +147,7 @@ dl#legend {
 }
 
 dl#legend dt {
-  height: 1rem;
-  width: 1rem;
+  padding: 0.5rem 0 0.5rem 0.5rem;
 }
 
 dl#legend dd {

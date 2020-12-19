@@ -20,9 +20,20 @@ streetSection.onclick = handleStreetClick;
 const streetToHTML = street =>
   `<a href data-key="${street.key}">${street.name}</a>`;
 
+const directionSymbol = direction => {
+  const symbols = {
+    Northbound: '<i class="fas fa-lg fa-arrow-up"></i>',
+    Southbound: '<i class="fas fa-lg fa-arrow-down"></i>',
+    Westbound: '<i class="fas fa-lg fa-arrow-left"></i>',
+    Eastbound: '<i class="fas fa-lg fa-arrow-right"></i>',
+  };
+
+  return symbols[direction];
+};
+
 const stopToHTML = stop => `<tr class="${stop.direction}">
   <td>${stop.crossStreet}</td>
-  <td>${stop.direction}</td>
+  <td>${directionSymbol(stop.direction)}</td>
   <td>${stop.busNumber}</td>
   <td>${stop.nextBus.format('hh:mm A')}</td>
 </tr>`;
@@ -30,9 +41,11 @@ const stopToHTML = stop => `<tr class="${stop.direction}">
 const legendHTML = direction => {
   const opposite = {Northbound: 'Southbound', Eastbound: 'Westbound'};
   return `<dl id="legend">
-    <dt class="${direction}"></dt>
+    <dt class="${direction}">${directionSymbol(direction)}</dt>
     <dd>${direction}</dd>
-    <dt class="${opposite[direction]}"></dt>
+    <dt class="${opposite[direction]}">${directionSymbol(
+    opposite[direction]
+  )}</dt>
     <dd>${opposite[direction]}</dd>
   </dl>`;
 };
