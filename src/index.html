@@ -52,18 +52,20 @@
   </head>
   <body>
     <aside>
-      <div class="titlebar">
-        <i class="fas fa-bus-alt" aria-hidden="true"></i>Transit
+      <div>
+        <div class="titlebar">
+          <i class="fas fa-bus-alt" aria-hidden="true"></i>Transit
+        </div>
+        <form id="search">
+          <input
+            type="text"
+            name="street-name"
+            autofocus
+            placeholder="Search for a Street"
+          />
+        </form>
+        <section class="streets"></section>
       </div>
-      <form id="search">
-        <input
-          type="text"
-          name="street-name"
-          autofocus
-          placeholder="Search for a Street"
-        />
-      </form>
-      <section class="streets"></section>
     </aside>
     <main>
       <div id="street-name" class="titlebar"></div>

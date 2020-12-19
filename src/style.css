@@ -142,4 +142,9 @@ dl#legend dd {
   body {
     grid-template-columns: 1fr 3fr;
   }
+
+  aside > div {
+    position: sticky;
+    top: 0;
+  }
 }
