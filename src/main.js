@@ -153,7 +153,7 @@ function getStopSchedules(stops) {
         (a, b) =>
           a.crossStreet.localeCompare(b.crossStreet) ||
           a.direction.localeCompare(b.direction) ||
-          a.busNumber - b.busNumber ||
+          a.busNumber.toString().localeCompare(b.busNumber) ||
           a.nextBus - b.nextBus
       )
     )
