@@ -58,10 +58,11 @@ main {
 input {
   padding: 10px;
   margin: 0 0 20px;
-  border-radius: 5px;
-  border: 0;
+  border: none;
   width: 100%;
   position: relative;
+  background-color: var(--foreground);
+  color: var(--sidebar);
 }
 
 input:before {
