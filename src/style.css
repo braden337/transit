@@ -8,8 +8,8 @@
   --background: #1d3557;
   --foreground: #f1faee;
   --header: #457b9d;
-  --tableRow: #50b6b9;
-  --tableRowAlternate: #8d8fb9;
+  --NEbackground: #50b6b9;
+  --SWbackground: #8d8fb9;
 }
 
 html {
@@ -39,7 +39,7 @@ aside {
   margin-top: 20px;
 }
 
-main {
+body > main {
   padding: 0 1rem 1rem;
   min-height: 100vh;
   background-color: var(--background);
@@ -73,50 +73,34 @@ input:before {
   top: 0;
 }
 
-table {
-  width: 100%;
-  border-spacing: 0;
-  margin-bottom: 20px;
-}
-
-tr {
+#schedules .row {
   display: grid;
   grid-template-columns: 2fr 1fr 0.75fr 1fr;
-}
-
-td,
-th {
   padding: 20px 10px;
   text-align: center;
+  align-items: center;
 }
 
-th:first-child,
-td:first-child {
+#schedules .row > div:first-child {
   text-align: left;
 }
 
-thead th {
+#schedules .row + .row {
+  border-top: 0.1rem solid var(--background);
+}
+
+#schedules header {
   font-weight: 700;
   background-color: var(--header);
-}
-
-thead tr {
-  margin-top: 1rem;
-}
-
-thead,
-thead tr {
+  position: -webkit-sticky;
   position: sticky;
   top: 8.85rem;
 }
 
-tbody td {
-  border-top: 1.5px solid var(--background);
-  color: var(--foreground);
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
+@supports (-webkit-touch-callout: none) {
+  #schedules header {
+    top: 9.85rem;
+  }
 }
 
 #street-name {
@@ -129,12 +113,12 @@ tbody tr:last-child td {
 
 .Northbound,
 .Eastbound {
-  background-color: var(--tableRow);
+  background-color: var(--NEbackground);
 }
 
 .Southbound,
 .Westbound {
-  background-color: var(--tableRowAlternate);
+  background-color: var(--SWbackground);
 }
 
 dl#legend {

@@ -11,8 +11,8 @@ const searchParams = new URLSearchParams();
 searchParams.append('api-key', process.env.APIKEY);
 
 const streetSection = document.querySelector('.streets');
-const stopSchedulesTableTitle = document.querySelector('#street-name');
-const StopSchedulesTable = document.querySelector('table tbody');
+const stopSchedulesTitle = document.querySelector('#street-name');
+const StopSchedules = document.querySelector('#schedules main');
 
 search.onsubmit = handleStreetSearch;
 streetSection.onclick = handleStreetClick;
@@ -31,12 +31,12 @@ const directionSymbol = direction => {
   return symbols[direction];
 };
 
-const stopToHTML = stop => `<tr class="${stop.direction}">
-  <td>${stop.crossStreet}</td>
-  <td>${directionSymbol(stop.direction)}</td>
-  <td>${stop.busNumber}</td>
-  <td>${stop.nextBus.format('hh:mm A')}</td>
-</tr>`;
+const stopToHTML = stop => `<div class="row ${stop.direction}">
+  <div>${stop.crossStreet}</div>
+  <div>${directionSymbol(stop.direction)}</div>
+  <div>${stop.busNumber}</div>
+  <div>${stop.nextBus.format('hh:mm A')}</div>
+</div>`;
 
 const legendHTML = direction => {
   const opposite = {Northbound: 'Southbound', Eastbound: 'Westbound'};
@@ -150,13 +150,13 @@ function getStopSchedules(stops) {
 function showStopSchedules(stops) {
   const thereAreStops = stops.length > 0;
 
-  stopSchedulesTableTitle.innerHTML = thereAreStops
+  stopSchedulesTitle.innerHTML = thereAreStops
     ? `<div>Displaying results for ${stops[0].name}</div>${legendHTML(
         stops[0].direction
       )}`
     : '';
 
-  StopSchedulesTable.innerHTML = thereAreStops
+  StopSchedules.innerHTML = thereAreStops
     ? stops.map(stopToHTML).join('')
     : '';
 }
