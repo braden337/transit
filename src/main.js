@@ -12,6 +12,7 @@ searchParams.append('api-key', process.env.APIKEY);
 
 const streetSection = document.querySelector('.streets');
 const stopSchedulesTitle = document.querySelector('#street-name');
+const stopSchedulesLegend = document.querySelector('#legend');
 const StopSchedules = document.querySelector('#schedules main');
 
 search.onsubmit = handleStreetSearch;
@@ -40,14 +41,12 @@ const stopToHTML = stop => `<div class="row ${stop.direction}">
 
 const legendHTML = direction => {
   const opposite = {Northbound: 'Southbound', Eastbound: 'Westbound'};
-  return `<dl id="legend">
-    <dt class="${direction}">${directionSymbol(direction)}</dt>
+  return `<dt class="${direction}">${directionSymbol(direction)}</dt>
     <dd>${direction}</dd>
     <dt class="${opposite[direction]}">${directionSymbol(
     opposite[direction]
   )}</dt>
-    <dd>${opposite[direction]}</dd>
-  </dl>`;
+    <dd>${opposite[direction]}</dd>`;
 };
 
 function endpointURL(pathname, options) {
@@ -150,13 +149,13 @@ function getStopSchedules(stops) {
 function showStopSchedules(stops) {
   const thereAreStops = stops.length > 0;
 
-  stopSchedulesTitle.innerHTML = thereAreStops
-    ? `<div>Displaying results for ${stops[0].name}</div>${legendHTML(
-        stops[0].direction
-      )}`
+  stopSchedulesTitle.innerText = thereAreStops
+    ? `Displaying results for ${stops[0].name}`
     : '';
 
-  StopSchedules.innerHTML = thereAreStops
-    ? stops.map(stopToHTML).join('')
+  stopSchedulesLegend.innerHTML = thereAreStops
+    ? legendHTML(stops[0].direction)
     : '';
+
+  StopSchedules.innerHTML = thereAreStops ? stops.map(stopToHTML).join('') : '';
 }

@@ -47,7 +47,7 @@ body > main {
 }
 
 .titlebar {
-  padding: 18px 10px;
+  padding: 1rem 10px;
   color: var(--foreground);
 }
 
@@ -94,12 +94,12 @@ input:before {
   background-color: var(--header);
   position: -webkit-sticky;
   position: sticky;
-  top: 8.85rem;
+  top: 3rem;
 }
 
 @supports (-webkit-touch-callout: none) {
   #schedules header {
-    top: 9.85rem;
+    top: 4rem;
   }
 }
 
@@ -126,12 +126,12 @@ dl#legend {
   grid-template-columns: auto 1fr;
   align-items: center;
   grid-gap: 0.5rem 1rem;
-  padding: 1rem 2rem 0;
+  padding: 0 2rem 1rem;
   margin: 0;
 }
 
 dl#legend dt {
-  padding: 0.5rem 0 0.5rem 0.5rem;
+  padding: 0.5rem;
 }
 
 dl#legend dd {
