@@ -79,20 +79,23 @@ table {
   margin-bottom: 20px;
 }
 
+tr {
+  display: grid;
+  grid-template-columns: 2fr 1fr 0.75fr 1fr;
+}
+
 td,
 th {
   padding: 20px 10px;
   text-align: center;
 }
 
-td:nth-child(1),
-th:nth-child(1),
-td:nth-child(2),
-th:nth-child(2) {
+th:first-child,
+td:first-child {
   text-align: left;
 }
 
-thead th {
+thead tr {
   font-weight: 700;
   background-color: var(--header);
   position: sticky;
