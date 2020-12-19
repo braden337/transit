@@ -40,7 +40,7 @@ aside {
 }
 
 main {
-  padding: 0 1rem 1rem;
+  padding: 0 2rem 1rem;
   min-height: 100vh;
   background-color: var(--background);
   color: var(--foreground);
@@ -74,8 +74,7 @@ input:before {
 
 table {
   background-color: var(--header);
-  width: 90%;
-  margin: auto;
+  width: 100%;
   border-spacing: 0;
   margin-bottom: 20px;
 }
@@ -83,6 +82,13 @@ table {
 td,
 th {
   padding: 20px 10px;
+  text-align: center;
+}
+
+td:nth-child(1),
+th:nth-child(1),
+td:nth-child(2),
+th:nth-child(2) {
   text-align: left;
 }
 
@@ -103,8 +109,6 @@ tbody tr:last-child td {
 }
 
 #street-name {
-  width: 90%;
-  margin: auto;
   padding-left: 0;
   font-weight: 700;
 }
