@@ -21,7 +21,6 @@ const streetToHTML = street =>
   `<a href data-key="${street.key}">${street.name}</a>`;
 
 const stopToHTML = stop => `<tr class="${stop.direction}">
-  <td>${stop.name}</td>
   <td>${stop.crossStreet}</td>
   <td>${stop.direction}</td>
   <td>${stop.busNumber}</td>
