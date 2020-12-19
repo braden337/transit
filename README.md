@@ -9,6 +9,13 @@ npx degit braden337/transit
 npm ci
 ```
 
+## API key
+
+1. Register for a Winnipeg Transit API key
+   [here](https://api.winnipegtransit.com)
+2. Rename `.env.example` to `.env`
+3. Inside `.env` replace `YOUR_API_KEY` with your actual API key
+
 ## Development
 
 Start the development server.
